@@ -1,0 +1,9 @@
+[user]
+	name = Axel Froborg
+	email = axel.froborg@gmail.com
+[init]
+	defaultBranch = main
+[pull]
+	rebase = false
+[commit]
+	gpgsign = false
