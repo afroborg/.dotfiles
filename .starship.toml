@@ -48,19 +48,19 @@ style = "177"
 format = '[\($all_status$ahead_behind\)]($style) '
 style = "177"
 conflicted = ""
-up_to_date = ""
-untracked = ""
+up_to_date = ""
+untracked = ""
 ahead = "${count}"
 diverged = "${ahead_count}${behind_count}"
 behind = "${count}"
-stashed = " "
+stashed = " "
 modified = ""
-staged = '[++\($count\)]($style)'
+staged = '[ﭜ\($count\)]($style)'
 renamed = "襁 "
 deleted = " "
 
 [nodejs]
-symbol = " "
+symbol = " "
 style = "34"
 format = "[$symbol($version )]($style)"
 
