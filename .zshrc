@@ -8,7 +8,7 @@ alias grep='grep --color'
 
 # Env variables
 export ZSH="$HOME/.oh-my-zsh"
-export STARSHIP_CONFIG='/Users/axelfroborg/.starship.toml'
+export STARSHIP_CONFIG="$HOME/.starship.toml"
 
 # Oh My Zsh
 ZSH_THEME="agnoster"

@@ -26,6 +26,12 @@ git clone git@github.com:afroborg/.dotfiles.git
 cd .dotfiles
 ```
 
+4. Update the .gitconfig with your name and email
+
+```bash
+sudo vim .gitconfig
+```
+
 3. Update the permissions for the initialization script
 
 ```bash
