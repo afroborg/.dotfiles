@@ -1,8 +1,17 @@
-# Dotfiles
+# ⚙️ Dotfiles
 
 > Note that this repository is very mac-heavy. It **will not** work on other machines.
 
-## Setup
+## 📦 Prerequisites
+
+In order for all of this to work, you need to have the following installed:
+
+- [ZSH](https://www.zsh.org/)
+- [A nerd font](https://www.nerdfonts.com/)
+  - Without this, no icons will show up in your terminal
+  - I am using `Fira Code Nerd Font`
+
+## 🚀 Setup
 
 1. Clone this repository to your home directory
 
@@ -30,3 +39,12 @@ chmod +x initialize.sh
 ```
 
 If you are prompted for a password, fill it in.
+
+## 💻 Software
+
+Running the `setup` script above will install the following software
+
+- Homebrew
+  - All taps and casks found in [Brewfile](./Brewfile)
+- [Oh my zsh](https://ohmyz.sh/)
+- [Starship](https://starship.rs/)
