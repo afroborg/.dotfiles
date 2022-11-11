@@ -1,38 +1,26 @@
-# Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 
+# Aliases
+alias ls='ls -la -G'
+alias vs='code .'
+alias src='source ~/.zshrc'
+alias grep='grep --color'
+
+
+# Env variables
 export ZSH="$HOME/.oh-my-zsh"
-export STARSHIP_CONFIG="$HOME/.starship.toml"
+export STARSHIP_CONFIG='/Users/axelfroborg/.starship.toml'
 
-ZSH_THEME="miloshadzic"
-
-HYPHEN_INSENSITIVE="true"
-
-zstyle ':omz:update' mode auto      # update automatically without asking
-
-# Zsh plugins
-plugins=(git node npm vscode docker docker-compose flutter golang nvm)
+# Oh My Zsh
+ZSH_THEME="agnoster"
+plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
-alias vs="code . -r"
-alias ngrok="/etc/ngrok/ngrok"
-
-# pnpm
-export PNPM_HOME="$HOME/Library/pnpm"
-export PATH="$PNPM_HOME:$PATH"
-# pnpm end
-
-# bun completions
-[ -s "~/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
-# Bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-export GPG_TTY=$(tty)
-
-#Starship
+# Starship stuff
 eval "$(starship init zsh)"
 
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+# Asdf
+echo -e "\n. $(brew --prefix asdf)/libexec/asdf.sh" >> ${ZDOTDIR:-~}/.zshrc
+
+. /usr/local/opt/asdf/libexec/asdf.sh
+
+. /usr/local/opt/asdf/libexec/asdf.sh

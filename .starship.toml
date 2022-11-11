@@ -1,0 +1,75 @@
+
+
+# Inserts a blank line between shell prompts
+add_newline = true
+
+# Change command timeout from 500 to 1000 ms
+command_timeout = 1000
+
+format = """ $all"""
+
+[username]
+style_user = "255"
+style_root = "255"
+format = "[$user]($style) "
+disabled = false
+show_always = true
+
+[hostname]
+ssh_only = false
+format = "on [$hostname](141) "
+disabled = false
+
+[character]
+success_symbol = ""
+error_symbol = ""
+
+[fill]
+symbol = " "
+
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+truncation_symbol = "…/"
+home_symbol = ""
+style = "69 bold"
+read_only = "  "
+read_only_style = "white"
+format = "at [$path]($style)[$read_only]($read_only_style) "
+
+[git_branch]
+symbol = " "
+format = "via [$symbol$branch]($style) "
+truncation_length = 4
+truncation_symbol = "…/"
+style = "177"
+
+[git_status]
+format = '[\($all_status$ahead_behind\)]($style) '
+style = "177"
+conflicted = ""
+up_to_date = ""
+untracked = ""
+ahead = "${count}"
+diverged = "${ahead_count}${behind_count}"
+behind = "${count}"
+stashed = " "
+modified = ""
+staged = '[++\($count\)]($style)'
+renamed = "襁 "
+deleted = " "
+
+[nodejs]
+symbol = " "
+style = "34"
+format = "[$symbol($version )]($style)"
+
+[golang]
+symbol = " "
+
+[package]
+symbol = " "
+disabled = true
+
+[rust]
+symbol = "🦀 "
