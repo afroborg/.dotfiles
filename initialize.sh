@@ -34,8 +34,17 @@ ln -s $HOME/.dotfiles/.gitconfig $HOME/.gitconfig
 rm -rf ~/.starship.toml
 ln -s $HOME/.dotfiles/.starship.toml $HOME/.starship.toml
 
+rm -rf ~/.asdfrc
+ln -s $HOME/.dotfiles/.asdfrc $HOME/.asdfrc
+
 # Install warp if not already installed
 brew install warp
 
 # Install my custom warp theme
 curl -s -N 'https://warp-themes.com/d/MUSDS6lF9k8BmIFiAWo0' | bash
+
+# Install asdf for nodejs
+asdf plugin add nodejs
+asdf install nodejs lts
+asdf global nodejs lts
+
