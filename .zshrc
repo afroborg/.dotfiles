@@ -4,6 +4,7 @@ alias ls='ls -la -G'
 alias vs='code .'
 alias src='source ~/.zshrc'
 alias grep='grep --color'
+alias ngrok='/etc/ngrok/ngrok'
 
 # Env variables
 export ZSH="$HOME/.oh-my-zsh"

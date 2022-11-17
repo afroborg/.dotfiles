@@ -7,3 +7,5 @@
 	rebase = false
 [commit]
 	gpgsign = false
+[core]
+	excludesfile = ~/.dotfiles/.globalignore
