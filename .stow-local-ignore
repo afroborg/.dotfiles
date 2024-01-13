@@ -1,0 +1,8 @@
+initialize.sh
+\.git
+.globalignore
+.gitmodules
+.gitignore
+iterm2
+README.md
+Brewfile
