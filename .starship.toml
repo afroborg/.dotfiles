@@ -16,6 +16,7 @@ show_always = true
 [hostname]
 ssh_only = false
 format = "on [$hostname](141) "
+ssh_symbol = " "
 disabled = false
 
 [battery]
@@ -44,28 +45,6 @@ read_only = "  "
 read_only_style = "white"
 format = "at [$path]($style)[$read_only]($read_only_style) "
 
-[git_branch]
-format = " [$symbol$branch]($style) "
-symbol = "🍣 "
-style = "bold yellow"
-
-[git_state]
-format = '[\($state( $progress_current of $progress_total)\)]($style) '
-
-[git_status]
-conflicted = "⚔️ "
-ahead = "🏎️ 💨 ×${count}"
-behind = "🐢 ×${count}"
-diverged = "🔱 🏎️ 💨 ×${ahead_count} 🐢 ×${behind_count}"
-untracked = "🛤️  ×${count}"
-stashed = "📦 "
-modified = "📝 ×${count}"
-staged = "🗃️  ×${count}"
-renamed = "📛 ×${count}"
-deleted = "🗑️  ×${count}"
-style = "bright-white"
-format = "$all_status$ahead_behind"
-
 [aws]
 symbol = "  "
 
@@ -78,6 +57,9 @@ symbol = " "
 [conda]
 symbol = " "
 
+[crystal]
+symbol = " "
+
 [dart]
 symbol = " "
 
@@ -85,12 +67,18 @@ symbol = " "
 symbol = " "
 
 [elixir]
-symbol = " "
+symbol = " "
 
 [elm]
 symbol = " "
 
+[fennel]
+symbol = " "
+
 [fossil_branch]
+symbol = " "
+
+[git_branch]
 symbol = " "
 
 [golang]
@@ -114,6 +102,9 @@ symbol = " "
 [julia]
 symbol = " "
 
+[kotlin]
+symbol = " "
+
 [lua]
 symbol = " "
 
@@ -131,6 +122,9 @@ symbol = " "
 
 [nodejs]
 symbol = " "
+
+[ocaml]
+symbol = " "
 
 [os.symbols]
 Alpaquita = " "
@@ -174,7 +168,13 @@ Unknown = " "
 Windows = "󰍲 "
 
 [package]
-disabled = true
+symbol = "󰏗 "
+
+[perl]
+symbol = " "
+
+[php]
+symbol = " "
 
 [pijul_channel]
 symbol = " "
@@ -193,3 +193,9 @@ symbol = " "
 
 [scala]
 symbol = " "
+
+[swift]
+symbol = " "
+
+[zig]
+symbol = " "
