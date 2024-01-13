@@ -7,7 +7,7 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 export ZSH="$HOME/.oh-my-zsh"
 export ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
 
-ZSH_THEME="agnoster"
+ZSH_THEME="minimal"
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 
