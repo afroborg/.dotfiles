@@ -8,7 +8,7 @@ export ZSH="$HOME/.oh-my-zsh"
 export ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
 
 ZSH_THEME="minimal"
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git zsh-autosuggestions fast-syntax-highlighting) 
 source $ZSH/oh-my-zsh.sh
 
 # Aliases
@@ -22,3 +22,5 @@ alias pn='pnpm'
 # Starship stuff
 export STARSHIP_CONFIG="$HOME/.starship.toml"
 eval "$(starship init zsh)"
+
+eval $(thefuck --alias)

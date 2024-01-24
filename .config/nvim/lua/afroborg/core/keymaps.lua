@@ -17,3 +17,5 @@ km.set("n", "<leader>to", ":tabnew<CR>")
 km.set("n", "<leader>tx", ":tabclose<CR>")
 km.set("n", "<leader>tn", ":tabn<CR>")
 km.set("n", "<leader>tp", ":tabp<CR>")
+
+
