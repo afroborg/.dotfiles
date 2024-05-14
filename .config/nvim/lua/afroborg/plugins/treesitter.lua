@@ -1,20 +1,18 @@
 return {
   'nvim-treesitter/nvim-treesitter',
-  build = ':TSUpdate',
   event = { 'BufReadPre', 'BufNewFile' },
+  build = ':TSUpdate',
   dependencies = {
     'windwp/nvim-ts-autotag',
     {
       'lukas-reineke/indent-blankline.nvim',
       main = 'ibl',
-      opts = {},
     },
   },
   config = function()
     local configs = require 'nvim-treesitter.configs'
 
     configs.setup {
-      ensure_installed = { 'c', 'lua', 'vim', 'vimdoc', 'query', 'elixir', 'heex', 'javascript', 'html' },
       auto_install = false,
       sync_install = false,
       highlight = { enable = true },
@@ -22,6 +20,36 @@ return {
       indent = { enable = true },
       ignore_install = {},
       modules = {},
+      ensure_installed = {
+        "json",
+        "javascript",
+        "typescript",
+        "tsx",
+        "yaml",
+        "html",
+        "css",
+        "markdown",
+        "markdown_inline",
+        "svelte",
+        "graphql",
+        "bash",
+        "lua",
+        "vim",
+        "dockerfile",
+        "gitignore",
+        "query",
+        "vimdoc",
+        "c"
+      },
+      incremental_selection = {
+        enable = true,
+        keymaps = {
+          init_selection = "<C-space>",
+          node_incremental = "<C-space>",
+          scope_incremental = false,
+          node_decremental = "<bs>"
+        },
+      },
     }
 
     local highlight = {

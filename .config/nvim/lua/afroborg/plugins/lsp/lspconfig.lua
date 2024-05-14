@@ -1,106 +1,123 @@
 return {
-    'neovim/nvim-lspconfig',
-    event = 'BufReadPre',
-    dependencies = {
-        {
-            'j-hui/fidget.nvim',
-            event = 'LspAttach',
-            tag = 'legacy',
-            opts = {},
-        },
-        {
-            'creativenull/efmls-configs-nvim',
-            event = 'LspAttach',
-            version = 'v1.x.x',
-        },
-        {
-            'folke/neodev.nvim',
-            ft = 'lua',
-            opts = {},
-        },
-        'b0o/schemastore.nvim',
-        {
-            'SmiteshP/nvim-navic',
-            event = 'LspAttach',
-            opts = {
-                highlight = true,
-            },
-        },
+  'neovim/nvim-lspconfig',
+  event = { "BufReadPre", "BufNewFile" },
+  dependencies = {
+    {
+      'j-hui/fidget.nvim',
+      event = 'LspAttach',
+      tag = 'legacy',
+      opts = {},
     },
-    config = function()
-        local lspconfig = require 'lspconfig'
-        local capabilities = vim.lsp.protocol.make_client_capabilities()
-        capabilities.textDocument.completion.completionItem.snippetSupport = true
+    {
+      'folke/neodev.nvim',
+      ft = 'lua',
+      opts = {},
+    },
+    'b0o/schemastore.nvim',
+    {
+      'SmiteshP/nvim-navic',
+      event = 'LspAttach',
+      opts = {
+        highlight = true,
+      },
+    },
+  },
+  config = function()
+    local lspconfig = require "lspconfig"
 
-        lspconfig.util.default_config = vim.tbl_extend('force', lspconfig.util.default_config, {
-            capabilities = capabilities,
-        })
+    local mason_lspconfig = require "mason-lspconfig"
 
-        local servers = require('afroborg.servers')()
+    local keymap = vim.keymap
 
-        for server, conf in pairs(servers) do
-            lspconfig[server].setup(conf)
-        end
+    vim.api.nvim_create_autocmd("LspAttach", {
+      group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+      callback = function(ev)
+        local opts = { buffer = ev.buf, silent = true }
 
-        vim.api.nvim_create_autocmd('LspAttach', {
-            group = vim.g.augroup,
-            callback = function(args)
-                local bufnr = args.buf
-                local client = vim.lsp.get_client_by_id(args.data.client_id)
+        -- set keybinds
+        opts.desc = "Show LSP references"
+        keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
 
-                if client.server_capabilities.documentSymbolProvider then
-                    require('nvim-navic').attach(client, bufnr)
-                    vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
-                end
+        opts.desc = "Go to declaration"
+        keymap.set("n", "gD", vim.lsp.buf.declaration, opts) -- go to declaration
 
-                local lspmap = function(mode, keys, func, desc)
-                    if desc then
-                        desc = 'LSP: ' .. desc
-                    end
+        opts.desc = "Show LSP definitions"
+        keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts) -- show lsp definitions
 
-                    vim.keymap.set(mode, keys, func, { buffer = bufnr, desc = desc })
-                end
+        opts.desc = "Show LSP implementations"
+        keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts) -- show lsp implementations
 
-                lspmap('n', '<leader>cr', vim.lsp.buf.rename, '[R]ename')
-                lspmap('n', '<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-                lspmap('v', 'ga', vim.lsp.buf.code_action, 'Code [A]ction')
+        opts.desc = "Show LSP type definitions"
+        keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
 
-                lspmap('n', 'gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-                lspmap('n', 'gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-                lspmap('n', 'gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-                lspmap('n', '<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
+        opts.desc = "See available code actions"
+        keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
 
-                if client.server_capabilities.documentFormattingProvider then
-                    lspmap('n', '<leader>ss', require('telescope.builtin').lsp_document_symbols,
-                        '[S]earch Document [S]ymbols')
-                    lspmap('n', '<leader>sS', require('telescope.builtin').lsp_dynamic_workspace_symbols,
-                        '[S]earch Workspace [S]ymbols')
-                end
+        opts.desc = "Smart rename"
+        keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
 
-                -- See `:help K` for why this keymap
-                lspmap('n', 'K', vim.lsp.buf.hover, 'Hover Documentation')
+        opts.desc = "Show buffer diagnostics"
+        keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
 
-                -- Lesser used LSP functionality
-                lspmap('n', 'gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+        opts.desc = "Show line diagnostics"
+        keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
 
-                -- Create a command `:Format` local to the LSP buffer
-                if client.server_capabilities.documentFormattingProvider then
-                    vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-                        vim.lsp.buf.format()
-                    end, { desc = 'Format current buffer with LSP' })
-                end
+        opts.desc = "Go to previous diagnostic"
+        keymap.set("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
 
-                require 'which-key'.register({
-                    c = { name = 'code', }
-                }, { prefix = '<leader>' })
+        opts.desc = "Go to next diagnostic"
+        keymap.set("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
 
-                -- Diagnostic keymaps
-                lspmap('n', '[d', vim.diagnostic.goto_prev, 'Go to previous diagnostic message')
-                lspmap('n', ']d', vim.diagnostic.goto_next, 'Go to next diagnostic message')
-                lspmap('n', 'gl', vim.diagnostic.open_float, 'Open floating diagnostic message')
-                lspmap('n', '<leader>cd', vim.diagnostic.setloclist, 'Open diagnostics list')
-                lspmap('n', '<leader>cD', vim.diagnostic.setloclist, 'Search workspace diagnostics list')
-            end
-        })
-    end,
+        opts.desc = "Show documentation for what is under cursor"
+        keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
+
+        opts.desc = "Restart LSP"
+        keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+      end,
+    })
+
+    local coq = require "coq"
+
+    mason_lspconfig.setup_handlers({
+      function(server_name)
+        lspconfig[server_name].setup(coq.lsp_ensure_capabilities({}))
+      end,
+      ["svelte"] = function()
+        lspconfig["svelte"].setup(coq.lsp_ensure_capabilities({
+          on_attach = function(client, _)
+            vim.api.nvim_create_autocmd("BufWritePost", {
+              pattern = { "*.js", "*.ts" },
+              callback = function(ctx)
+                client.notify("$/onDidChangeJsOrTsFile", { uri = ctx.match })
+              end
+            })
+          end,
+        }))
+      end,
+      ["graphql"] = function()
+        lspconfig["graphql"].setup(coq.lsp_ensure_capabilities({
+          filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" }
+        }))
+      end,
+      ["emmet_ls"] = function()
+        lspconfig["emmet_ls"].setup(coq.lsp_ensure_capabilities({
+          filetypes = { "html", "css", "javascript", "typescript", "svelte" }
+        }))
+      end,
+      ["lua_ls"] = function()
+        lspconfig["lua_ls"].setup(coq.lsp_ensure_capabilities({
+          settings = {
+            Lua = {
+              diagnostics = {
+                globals = { "vim" }
+              },
+              completion = {
+                callSnippet = "Replace"
+              }
+            }
+          }
+        }))
+      end
+    })
+  end,
 }

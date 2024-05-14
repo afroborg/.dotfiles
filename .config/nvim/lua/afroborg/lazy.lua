@@ -23,7 +23,15 @@ local plugins = {
     { 'tpope/vim-surround' },
 }
 
-local opts = {}
+local opts = {
+    checker = {
+        enable = true,
+        notify = false
+    },
+    change_detection = {
+        notify = false,
+    }
+}
 
 local status, lazy = pcall(require, 'lazy')
 
