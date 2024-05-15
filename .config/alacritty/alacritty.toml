@@ -1,0 +1,25 @@
+import = [
+    "~/.config/alacritty/themes/github_dark_default.toml"
+]
+
+[env]
+TERM = "xterm-256color"
+
+[window]
+padding.x = 10
+padding.y = 10
+
+decorations = "Buttonless"
+
+opacity = 0.8
+blur = true
+
+startup_mode = "Maximized"
+
+[font]
+normal.family = "MonaSpiceNe Nerd Font Mono"
+size = 13
+
+[shell]
+program = "/bin/zsh"
+args = ["-l", "-c", "tmux attach || tmux new"]
