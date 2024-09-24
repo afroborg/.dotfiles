@@ -4,8 +4,12 @@
 [init]
 	defaultBranch = main
 [pull]
-	rebase = false
+	rebase = true
 [commit]
-	gpgsign = false
+	gpgsign = true
 [core]
-	excludesfile = ~/.dotfiles/.globalignore
+  excludesfile = ~/.dotfiles/.globalignore
+[push]
+  autoSetupRemote = true
+[core]
+  editor = nvim

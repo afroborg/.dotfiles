@@ -1,33 +1,30 @@
-# Andriod SDK
-export ANDROID_HOME=$HOME/Library/Android/sdk
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/platform-tools
+if [[ -f "/opt/homebrew/bin/brew" ]] then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
 
-# Oh my zsh stuff
-export ZSH="$HOME/.oh-my-zsh"
-export ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
+DOTFILES_HOME=$HOME/.dotfiles
+source <(cat $DOTFILES_HOME/zsh/*)
 
-ZSH_THEME="minimal"
-plugins=(git zsh-autosuggestions fast-syntax-highlighting) 
-source $ZSH/oh-my-zsh.sh
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 
-# Aliases
-alias ls='eza -algHS'
-alias cat='bat'
-alias vs='code .'
-alias src='source ~/.zshrc'
-alias grep='grep --color'
-alias pn='pnpm'
+eval "$(fzf --zsh)"
 
-# Starship stuff
-export STARSHIP_CONFIG="$HOME/.starship.toml"
-eval "$(starship init zsh)"
+[ -s "$NVM_SOURCE/nvm.sh" ] && . "$NVM_SOURCE/nvm.sh"
+
+# Check that the function `starship_zle-keymap-select()` is defined.
+# xref: https://github.com/starship/starship/issues/3418
+type starship_zle-keymap-select >/dev/null || \
+  {
+    eval "$(starship init zsh)"
+  }
 
 eval $(thefuck --alias)
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+eval "$(direnv hook zsh)"
 
-export NVM_DIR="$HOME/.nvm"
-  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+set -o vi
+# autoload -U edit-command-line
+# zle -N edit-command-line 
+# bindkey "^X^E" edit-command-line
